@@ -1,0 +1,50 @@
+.container {
+  display: flex;
+  width: 100%;
+
+  .viewport {
+    position: relative;
+    width: 512px;
+    min-height: 512px;
+    background-color: black;
+  
+    .item {
+      position: absolute;
+      width: 8px;
+      height: 8px;
+  
+      &.tree {
+        background-color: lightgreen;
+      }
+
+      &.rabbit {
+        background-color: white;
+        border-radius: 50%;
+      }
+
+      &.wolf {
+        background-color: red;
+        border-radius: 50%;
+      }
+    }  
+  }  
+
+  .info {
+    flex-grow: 1;
+    display: flex;
+    background-color: #333;
+    flex-direction: column;
+    padding: 1rem;
+    color: white;
+
+    .monitor {
+      flex-grow: 1;
+      text-align: left;
+    }
+
+    .buttons {
+      display: flex;
+      justify-content: space-around;
+    }
+  }
+}
