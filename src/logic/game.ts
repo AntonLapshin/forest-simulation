@@ -2,6 +2,7 @@ import { INext } from "./interfaces";
 import { Map } from "./map";
 import { initWorld } from "./world";
 import { ForestController } from "./controllers/forest-controller";
+import { RabbitsController } from "./controllers/rabbits-controller";
 
 export class Game implements INext {
   public map: Map;
@@ -10,7 +11,10 @@ export class Game implements INext {
   constructor() {
     this.map = new Map(64, 64);
     initWorld(this.map);
-    this.controllers = [new ForestController(this.map)];
+    this.controllers = [
+      new ForestController(this.map),
+      new RabbitsController(this.map)
+    ];
   }
 
   next() {

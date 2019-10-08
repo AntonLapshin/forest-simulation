@@ -8,10 +8,18 @@ export interface FlatPos {
   (pos: Pos): number;
 }
 
-export interface Filter {
+export interface IteratorFunc {
   (pos: Pos): boolean;
 }
 
 export interface Iterator {
-  (fn: Filter, bounds: any[]): void;
+  (fn: IteratorFunc, bounds?: any[]): void;
+}
+
+export interface IteratorCounter {
+  (fn: IteratorFunc, bounds?: any[]): void;
+}
+
+export interface IteratorCounterPos {
+  (fn: IteratorFunc, index: number, bounds?: any[]): void;
 }

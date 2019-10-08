@@ -1,4 +1,5 @@
 export const data = [
+  { type: "rabbit", pos: [25, 51], age: 1 },
   { type: "tree", pos: [10, 10], age: 94 },
   { type: "tree", pos: [11, 10], age: 94 },
   { type: "tree", pos: [12, 10], age: 94 },

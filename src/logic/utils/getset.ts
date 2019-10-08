@@ -13,4 +13,6 @@ export const createGetter = (items: any[], flatPos: FlatPos) => (pos: Pos) =>
 export const createSetter = (items: any[], flatPos: FlatPos) => (
   pos: Pos,
   value: any
-) => (items[flatPos(pos)] = value);
+): void => {
+  items[flatPos(pos)] = value;
+};

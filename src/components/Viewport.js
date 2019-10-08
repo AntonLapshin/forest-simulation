@@ -31,6 +31,9 @@ export class Viewport extends React.Component {
         <div className="info">
           <div className="monitor">
             <p>Step: {this.state.step}</p>
+            <p>Trees: {game.map.getItemsBy("tree").length}</p>
+            <p>Rabbits: {game.map.getItemsBy("rabbit").length}</p>
+            <p>Wolves: {game.map.getItemsBy("wolves").length}</p>
           </div>
           <div className="buttons">
             <button

@@ -1,39 +1,41 @@
-import { Pos, Filter } from "./interfaces";
+import { Pos, IteratorFunc } from "./interfaces";
 import { createFlatPos, createGetter, createSetter } from "./utils/getset";
 import {
   createIterator,
-  createCounter,
-  createPosGetter
+  createIteratorCounter,
+  createIteratorPos
 } from "./utils/iterator";
+import { getDistance } from "./utils/axis";
 import { Item } from "./creatures/item";
 
 export class Map {
   private items = {};
+  private iterator;
   private counter;
   private posGetter;
-  private getter;
-  private setter;
-  public onlyEmpty: Filter;
-  private exists: Filter;
+  private getCell: (pos: Pos) => Item;
+  private setCell: (pos: Pos, value: Item) => void;
+  public onlyEmpty: IteratorFunc;
+  private exists: IteratorFunc;
   private count = 0;
 
   constructor(private width: number, private height: number) {
     const flatPos = createFlatPos(width, height);
     const cells = Array(width * height).fill(null);
-    const iterator = createIterator(width, height);
-    this.counter = createCounter(iterator);
-    this.posGetter = createPosGetter(iterator);
-    this.getter = createGetter(cells, flatPos);
-    this.setter = createSetter(cells, flatPos);
-    this.onlyEmpty = pos => this.getter(pos) === null;
-    this.exists = pos => this.getter(pos) !== undefined;
+    this.iterator = createIterator(width, height);
+    this.counter = createIteratorCounter(this.iterator);
+    this.posGetter = createIteratorPos(this.iterator);
+    this.getCell = createGetter(cells, flatPos);
+    this.setCell = createSetter(cells, flatPos);
+    this.onlyEmpty = pos => this.getCell(pos) === null;
+    this.exists = pos => this.getCell(pos) !== undefined;
   }
 
   move(pos: Pos, targetPos: Pos): void {
-    const item = this.getter(pos);
+    const item = this.getCell(pos);
     item.pos = targetPos;
-    this.setter(targetPos, this.getter(pos));
-    this.setter(pos, null);
+    this.setCell(targetPos, this.getCell(pos));
+    this.setCell(pos, null);
   }
 
   get freeCellsCount() {
@@ -46,7 +48,7 @@ export class Map {
 
   getAllItems(): Array<Item> {
     return Object.keys(this.items).reduce(
-      (acc: any[], group) => acc.concat(this.items[group]),
+      (acc: any[], type) => acc.concat(this.items[type]),
       []
     );
   }
@@ -57,7 +59,7 @@ export class Map {
       this.items[type] = [];
     }
     this.items[type].push(item);
-    this.setter(item.pos, item);
+    this.setCell(item.pos, item);
     this.count++;
   }
 
@@ -65,7 +67,7 @@ export class Map {
     const { type } = item;
     const index = this.items[type].indexOf(item);
     this.items[type].splice(index, 1);
-    this.setter(item.pos, null);
+    this.setCell(item.pos, null);
     this.count--;
   }
 
@@ -79,5 +81,24 @@ export class Map {
     const length = this.counter(this.onlyEmpty, bounds);
     const index = ~~(Math.random() * length);
     return this.posGetter(this.onlyEmpty, index, bounds);
+  }
+
+  getClosest([x, y]: Pos, type: string, radius: number): Item {
+    let closestItem = null;
+    let minDistance = Number.MAX_VALUE;
+    this.iterator(
+      (pos: Pos) => {
+        const item = this.getCell(pos);
+        if (item && item.type === type) {
+          const distance = getDistance([x, y], pos);
+          if (!closestItem || distance < minDistance) {
+            closestItem = item;
+            minDistance = distance;
+          }
+        }
+      },
+      [x - radius, y - radius, x + radius, y + radius]
+    );
+    return closestItem;
   }
 }

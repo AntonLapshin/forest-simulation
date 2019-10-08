@@ -4,8 +4,6 @@ import { ActionAging, age } from "../actions/aging";
 import { ActionDuplicating, duplicate } from "../actions/duplicating";
 import { Item } from "./item";
 
-const distance = 3;
-
 export class Tree extends Item
   implements INext, ActionAging, ActionDuplicating {
   isAlive = true;
@@ -15,10 +13,9 @@ export class Tree extends Item
 
   constructor(pos: Pos, map: Map) {
     super("tree", pos);
-    this.actions.age = age(this, () => map.removeItem(this));
-    this.actions.duplicate = duplicate(this, () => {
-      const randomPos = map.getFreePosAroundRandom(this.pos, distance);
-      randomPos && map.addItem(new Tree(randomPos, map));
+    this.actions.age = age(this, map);
+    this.actions.duplicate = duplicate(this, map, (pos: Pos) => {
+      map.addItem(new Tree(pos, map));
     });
   }
 
