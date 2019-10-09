@@ -61,6 +61,7 @@ export class Map {
     this.items[type].push(item);
     this.setCell(item.pos, item);
     this.count++;
+    type === "rabbit" && console.log(this.items);
   }
 
   removeItem(item: Item): void {

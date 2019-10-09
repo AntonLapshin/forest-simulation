@@ -1,18 +1,14 @@
-import { FlatPos, Pos } from "../interfaces";
+import { Pos, PosToIndex } from "../interfaces";
 
-export const createFlatPos = (width: number, height: number): FlatPos => ([
-  x,
-  y
-]: Pos) => {
-  return x < 0 || x >= width || y < 0 || y >= height ? -1 : y * width + x;
-};
+export const posToIndex = ([width, height]) => ([x, y]: Pos) =>
+  x < 0 || x >= width || y < 0 || y >= height ? -1 : y * width + x;
 
-export const createGetter = (items: any[], flatPos: FlatPos) => (pos: Pos) =>
-  items[flatPos(pos)];
+export const getItem = (items: any[], posToIndex: PosToIndex) => (pos: Pos) =>
+  items[posToIndex(pos)];
 
-export const createSetter = (items: any[], flatPos: FlatPos) => (
+export const setItem = (items: any[], posToIndex: PosToIndex) => (
   pos: Pos,
   value: any
 ): void => {
-  items[flatPos(pos)] = value;
+  items[posToIndex(pos)] = value;
 };

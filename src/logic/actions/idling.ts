@@ -6,10 +6,13 @@ export interface ActionIdling {
   energy: number;
 }
 
+const hasEnergy = (creature: ActionIdling): boolean => creature.energy > 0;
+
 export const idle = (creature: ActionIdling, map: Map) => (food: any) => {
   creature.energy--;
-  if (creature.energy < 1) {
-    creature.isAlive = false;
-    map.removeItem((creature as unknown) as Item);
+  if (!hasEnergy(creature)) {
+    return;
   }
+  creature.isAlive = false;
+  map.removeItem((creature as unknown) as Item);
 };

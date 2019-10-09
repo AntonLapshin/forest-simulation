@@ -21,7 +21,7 @@ export class Rabbit extends Item
     ActionReproducting {
   isAlive = true;
   age = 0;
-  lifespan = 300;
+  lifespan = 1000;
   energy = 100;
   maxEnergy = 100;
 
@@ -84,14 +84,17 @@ export class Rabbit extends Item
       );
       // console.log({ pos: this.pos, closestTree });
       if (closestRabbit) {
+        console.log("I see a partner");
         if (getDistance(this.pos, closestRabbit.pos) === 1) {
           // console.log("eat");
+          console.log("got it :)");
           this.actions.reproduce(closestRabbit);
         } else {
           // console.log("move");
           this.actions.move(closestRabbit.pos);
         }
       } else {
+        console.log("I don't see a partner, move randomly");
         const randomFreePos = this.map.getFreePosAroundRandom(this.pos, 1);
         this.actions.move(randomFreePos);
       }

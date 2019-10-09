@@ -7,10 +7,14 @@ export interface ActionAging {
   age: number;
 }
 
-export const age = (creature: ActionAging, map: Map) => () => {
+const stillYoung = (creature: ActionAging): boolean =>
+  creature.age < creature.lifespan;
+
+export const age = (creature: ActionAging, map: Map) => (): void => {
   creature.age++;
-  if (creature.age === creature.lifespan) {
-    creature.isAlive = false;
-    map.removeItem((creature as unknown) as Item);
+  if (stillYoung(creature)) {
+    return;
   }
+  creature.isAlive = false;
+  map.removeItem((creature as unknown) as Item);
 };

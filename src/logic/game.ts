@@ -18,9 +18,13 @@ export class Game implements INext {
   }
 
   next() {
-    this.controllers.forEach(controller => controller.next());
-    const allItems = this.map.getAllItems();
-    allItems.forEach(item => (item as any).next && (item as any).next());
+    try {
+      this.controllers.forEach(controller => controller.next());
+      const allItems = this.map.getAllItems();
+      allItems.forEach(item => (item as any).next && (item as any).next());
+    } catch (e) {
+      console.error(e);
+    }
   }
 
   save(): string {

@@ -2,9 +2,9 @@ export interface INext {
   next(): void;
 }
 
-export type Pos = any[];
+export type Pos = number[];
 
-export interface FlatPos {
+export interface PosToIndex {
   (pos: Pos): number;
 }
 
@@ -16,10 +16,10 @@ export interface Iterator {
   (fn: IteratorFunc, bounds?: any[]): void;
 }
 
-export interface IteratorCounter {
+export interface Count {
   (fn: IteratorFunc, bounds?: any[]): void;
 }
 
-export interface IteratorCounterPos {
+export interface GetPos {
   (fn: IteratorFunc, index: number, bounds?: any[]): void;
 }

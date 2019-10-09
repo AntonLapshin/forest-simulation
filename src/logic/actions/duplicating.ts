@@ -8,18 +8,20 @@ export interface ActionDuplicating {
   duplicationChance: number;
 }
 
+const timeToDuplicate = (creature: ActionDuplicating): boolean =>
+  Math.random() < creature.duplicationChance;
+
 export const duplicate = (
   creature: ActionDuplicating,
   map: Map,
   duplicate: (pos: Pos) => void
 ) => () => {
-  if (Math.random() < creature.duplicationChance) {
-    const randomPos = map.getFreePosAroundRandom(
-      ((creature as unknown) as Item).pos,
-      DISTANCE
-    );
-    if (randomPos) {
-      duplicate(randomPos);
-    }
+  if (!timeToDuplicate(creature)) {
+    return;
   }
+  const randomPos = map.getFreePosAroundRandom(
+    ((creature as unknown) as Item).pos,
+    DISTANCE
+  );
+  randomPos && duplicate(randomPos);
 };

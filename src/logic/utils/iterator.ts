@@ -1,12 +1,6 @@
-import {
-  Pos,
-  IteratorFunc,
-  Iterator,
-  IteratorCounter,
-  IteratorCounterPos
-} from "../interfaces";
+import { Pos, IteratorFunc, Iterator, Count, GetPos } from "../interfaces";
 
-export const createIterator = (width: number, height: number): Iterator => (
+export const iterator = ([width, height]): Iterator => (
   fn: IteratorFunc,
   bounds: number[] = [0, 0, width - 1, height - 1]
 ): void => {
@@ -19,21 +13,19 @@ export const createIterator = (width: number, height: number): Iterator => (
   }
 };
 
-export const createIteratorCounter = (iterator: Iterator): IteratorCounter => (
+export const count = (iterator: Iterator): Count => (
   fn: IteratorFunc,
   bounds?: number[]
 ): number => {
   let counter = 0;
   iterator((pos: Pos) => {
-    if (fn(pos)) {
-      counter++;
-    }
+    fn(pos) && counter++;
     return true;
   }, bounds);
   return counter;
 };
 
-export const createIteratorPos = (iterator: Iterator): IteratorCounterPos => (
+export const getPos = (iterator: Iterator): GetPos => (
   fn: IteratorFunc,
   index: number,
   bounds?: number[]
