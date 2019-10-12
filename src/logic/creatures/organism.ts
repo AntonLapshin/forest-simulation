@@ -4,7 +4,7 @@ import { Pos } from "../interfaces";
 import { Map } from "../map";
 
 export class Organism {
-  private activatedSkills: {};
+  private activatedSkills: {} = {};
 
   constructor(private genome: Genome, private pos: Pos, public map: Map) {}
 

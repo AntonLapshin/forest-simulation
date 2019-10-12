@@ -1,1 +1,1 @@
-export const data = [{ type: "tree", pos: [10, 10] }];
+export const data = [{ type: "plant", pos: [10, 10] }];

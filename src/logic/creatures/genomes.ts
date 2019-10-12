@@ -6,8 +6,8 @@ export const genomes = {
   plant: {
     skills: ["aging", "duplicating"],
     genes: {
-      lifespan: 10000,
-      duplicationChance: 0.01,
+      lifespan: 1000,
+      duplicationChance: 0.02,
       duplicationDistance: 3,
       calories: 100,
       defense: 0
