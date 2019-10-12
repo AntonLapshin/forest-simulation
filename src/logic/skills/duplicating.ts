@@ -15,7 +15,7 @@ export const duplicating: IGene = {
     organism.dna.props.duplicationDistance =
       organism.dna.props.duplicationDistance || DUPLICATION_DISTANCE;
   },
-  work(organism: any) {
+  next(organism: any) {
     if (!timeToDuplicate(organism)) {
       return;
     }

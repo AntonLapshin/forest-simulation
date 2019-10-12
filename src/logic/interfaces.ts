@@ -17,14 +17,15 @@ export interface Iterator {
 }
 
 export interface Count {
-  (fn: IteratorFunc, bounds?: any[]): void;
+  (fn: IteratorFunc, bounds?: any[]): number;
 }
 
 export interface GetPos {
-  (fn: IteratorFunc, index: number, bounds?: any[]): void;
+  (fn: IteratorFunc, index: number, bounds?: any[]): Pos;
 }
 
 export interface IGene {
   activate(organism: any): void;
-  work(organism: any): void;
+  do?: any;
+  next?(organism: any): void;
 }

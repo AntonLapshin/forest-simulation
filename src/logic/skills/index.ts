@@ -5,7 +5,7 @@ import { idling } from "./idling";
 import { moving } from "./moving";
 import { reproducing } from "./reproducing";
 
-export const allGenes = {
+export const allSkills = {
   aging,
   duplicating,
   eating,

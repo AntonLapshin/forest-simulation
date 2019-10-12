@@ -1,15 +1,10 @@
-import { Tree } from "./creatures/tree";
-import { Rabbit } from "./creatures/rabbit";
+import { genomes } from "./creatures/genomes";
 import { Map } from "./map";
 import { data } from "./data/data";
+import { Organism } from "./creatures/organism";
 
 export const initWorld = (map: Map) => {
   data.forEach(item => {
-    if (item.type === "tree") {
-      map.addItem(new Tree(item.pos, map));
-    }
-    if (item.type === "rabbit") {
-      map.addItem(new Rabbit(item.pos, map));
-    }
+    map.addItem(new Organism(genomes[item.type], item.pos, map));
   });
 };

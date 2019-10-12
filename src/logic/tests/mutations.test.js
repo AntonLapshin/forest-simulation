@@ -1,4 +1,12 @@
-import { mutateGene } from "../utils/dna";
+import { mutate } from "../dna/mutations";
+
+const gene = {
+  min: 0,
+  max: 1,
+  step: 0.05
+};
+
+const mutateGene = mutate(gene);
 
 it("mutate gene", () => {
   expect(mutateGene(() => 1)(0.5)).toBeCloseTo(0.55);

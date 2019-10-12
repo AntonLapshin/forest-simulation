@@ -3,15 +3,15 @@ import { IGene } from "../interfaces";
 export const LIFESPAN = 300;
 
 const stillYoung = (organism: any): boolean =>
-  organism.age < organism.dna.props.lifespan;
+  organism.age < organism.genome.genes.lifespan;
 
 export const aging: IGene = {
   activate(organism: any) {
     organism.isAlive = true;
-    organism.dna.props.lifespan = organism.dna.props.lifespan || LIFESPAN;
-    organism.age = 0;
+    organism.genome.genes.lifespan = organism.genome.genes.lifespan || LIFESPAN;
+    organism.age = organism.age || 0;
   },
-  work(organism: any) {
+  next(organism: any) {
     organism.age++;
     if (stillYoung(organism)) {
       return;

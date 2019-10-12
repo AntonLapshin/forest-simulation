@@ -1,11 +1,11 @@
 /*
- * DNA of the spicies
+ * Genomes of the spicies
  */
 
-export const spicies = {
+export const genomes = {
   plant: {
     skills: ["aging", "duplicating"],
-    props: {
+    genes: {
       lifespan: 10000,
       duplicationChance: 0.01,
       duplicationDistance: 3,
@@ -13,7 +13,7 @@ export const spicies = {
       defense: 0
     },
     meta: {
-      name: "plant",
+      type: "plant",
       color: "lightgreen"
     }
   },
@@ -24,14 +24,14 @@ export const spicies = {
       laziness: 0.5,
       libido: 0.5
     },
-    props: {
+    genes: {
       lifespan: 500,
       maxEnergy: 100,
       calories: 500,
       defense: 0.2
     },
     meta: {
-      name: "rabbit",
+      type: "rabbit",
       color: "white"
     }
   }

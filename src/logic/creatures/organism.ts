@@ -1,20 +1,20 @@
-import { DNA } from "../utils/dna";
-import { allGenes } from "../genes";
+import { Genome } from "../dna/genome";
+import { allSkills } from "../skills";
 import { Pos } from "../interfaces";
 import { Map } from "../map";
 
 export class Organism {
-  private activatedGenes: {};
+  private activatedSkills: {};
 
-  constructor(private dna: DNA, private pos: Pos, public map: Map) {}
+  constructor(private genome: Genome, private pos: Pos, public map: Map) {}
 
   next(): void {
-    Object.keys(this.dna).forEach((geneName: string) => {
-      if (!this.activatedGenes[geneName] && allGenes[geneName]) {
-        allGenes[geneName].activate(this);
-        this.activatedGenes[geneName] = true;
+    this.genome.skills.forEach((skillName: string) => {
+      if (!this.activatedSkills[skillName] && allSkills[skillName]) {
+        allSkills[skillName].activate(this);
+        this.activatedSkills[skillName] = true;
       }
-      allGenes[geneName].work(this);
+      allSkills[skillName].next && allSkills[skillName].next(this);
     });
   }
 }
