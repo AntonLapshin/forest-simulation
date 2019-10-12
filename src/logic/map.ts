@@ -78,13 +78,13 @@ export class Map {
     return this.getNPos(this.onlyEmpty, index, bounds);
   }
 
-  getClosest([x, y]: Pos, type: string, radius: number): any {
+  getClosest([x, y]: Pos, clause: (item: any) => boolean, radius: number): any {
     let closestItem = null;
     let minDistance = Number.MAX_VALUE;
     this.iterateCells(
       (pos: Pos) => {
         const item = this.getAt(pos);
-        if (item && item.genome.meta.type === type) {
+        if (item && clause(item)) {
           const distance = getDistance([x, y], pos);
           if (!closestItem || distance < minDistance) {
             closestItem = item;

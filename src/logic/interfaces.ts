@@ -28,4 +28,5 @@ export interface IGene {
   activate(organism: any): void;
   do?: any;
   next?(organism: any): void;
+  getBehavioralFactor?(organism: any): number;
 }

@@ -26,9 +26,35 @@ const allGenes = {
     max: Number.MAX_VALUE,
     step: 0.1
   },
+  attack: {
+    min: 0,
+    max: Number.MAX_VALUE,
+    step: 0.1
+  },
   maxEnergy: {
     min: 5,
-    max: Number.MAX_VALUE
+    max: Number.MAX_VALUE,
+    step: 1
+  },
+  visionRadius: {
+    min: 1,
+    max: 10,
+    step: 0.1
+  },
+  hunger: {
+    min: 0,
+    max: 1,
+    step: 0.05
+  },
+  laziness: {
+    min: 0,
+    max: 1,
+    step: 0.05
+  },
+  libido: {
+    min: 0,
+    max: 1,
+    step: 0.05
   }
 };
 

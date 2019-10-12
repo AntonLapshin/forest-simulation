@@ -1,18 +1,30 @@
-import { Map } from "../map";
-import { Item } from "../creatures/item";
+import { IGene } from "../interfaces";
 
-export interface ActionIdling {
-  isAlive: boolean;
-  energy: number;
-}
+export const MAX_ENERGY = 100;
+const LAZINESS = 0.3;
 
-const hasEnergy = (creature: ActionIdling): boolean => creature.energy > 0;
+const hasEnergy = (organism: any): boolean => organism.energy > 0;
 
-export const idle = (creature: ActionIdling, map: Map) => (food: any) => {
-  creature.energy--;
-  if (!hasEnergy(creature)) {
-    return;
+export const idling: IGene = {
+  activate(organism: any) {
+    organism.genome.genes.maxEnergy =
+      organism.genome.genes.maxEnergy || MAX_ENERGY;
+    organism.energy = organism.energy || organism.genome.genes.maxEnergy;
+    organism.genome.genes.laziness = organism.genome.genes.laziness || LAZINESS;
+  },
+  do(organism: any) {
+    organism.energy--;
+    if (!hasEnergy(organism)) {
+      return;
+    }
+    organism.map.removeItem(organism);
+  },
+  getBehavioralFactor(organism): number {
+    return (
+      organism.genome.genes.laziness *
+      (1 -
+        (organism.genome.genes.maxEnergy - organism.energy) /
+          organism.genome.genes.maxEnergy)
+    );
   }
-  creature.isAlive = false;
-  map.removeItem((creature as unknown) as Item);
 };

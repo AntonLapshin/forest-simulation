@@ -29,10 +29,6 @@ export const combineGenomes = (genomeA: Genome, genomeB: Genome): Genome => {
       combineGenes(genomeA.genes, genomeB.genes),
       {}
     ));
-  genomeA.behavioralFactors &&
-    (newGenome.behavioralFactors = Object.keys(
-      genomeA.behavioralFactors
-    ).reduce(combineGenes(genomeA.genes, genomeB.genes), {}));
 };
 
 export const copyGenome = (genome: Genome): Genome => {
@@ -42,10 +38,6 @@ export const copyGenome = (genome: Genome): Genome => {
   genome.meta && (newGenome.meta = { ...genome.meta });
   genome.genes &&
     (newGenome.genes = Object.entries(genome.genes).reduce(copyGene, {}));
-  genome.behavioralFactors &&
-    (newGenome.behavioralFactors = Object.entries(
-      genome.behavioralFactors
-    ).reduce(copyGene, {}));
 
   return newGenome;
 };

@@ -7,7 +7,6 @@ const stillYoung = (organism: any): boolean =>
 
 export const aging: IGene = {
   activate(organism: any) {
-    organism.isAlive = true;
     organism.genome.genes.lifespan = organism.genome.genes.lifespan || LIFESPAN;
     organism.age = organism.age || 0;
   },
@@ -16,7 +15,6 @@ export const aging: IGene = {
     if (stillYoung(organism)) {
       return;
     }
-    organism.isAlive = false;
     organism.map.removeItem(organism);
   }
 };

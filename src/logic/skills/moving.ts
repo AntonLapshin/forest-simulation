@@ -1,17 +1,21 @@
+import { IGene } from "../interfaces";
 import { Pos } from "../interfaces";
-import { moveTo } from "../utils/axis";
-import { Map } from "../map";
+import { getNextPosTo } from "../utils/axis";
 
-export interface ActionMoving {
-  pos: Pos;
-  energy: number;
-}
+export const MAX_ENERGY = 100;
 
-export const move = (creature: ActionMoving, map: Map) => (targetPos: Pos) => {
-  const nextPos = moveTo(creature.pos, targetPos);
-  if (!map.onlyEmpty(nextPos)) {
-    return;
+export const moving: IGene = {
+  activate(organism: any) {
+    organism.genome.genes.maxEnergy =
+      organism.genome.genes.maxEnergy || MAX_ENERGY;
+    organism.energy = organism.energy || organism.genome.genes.maxEnergy;
+  },
+  do(organism: any, pos: Pos) {
+    const nextPos = getNextPosTo(organism.pos, pos);
+    if (!organism.map.onlyEmpty(nextPos)) {
+      return;
+    }
+    organism.map.move(organism.pos, nextPos);
+    organism.energy--;
   }
-  map.move(creature.pos, nextPos);
-  creature.energy--;
 };
