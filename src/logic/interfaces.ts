@@ -23,3 +23,8 @@ export interface Count {
 export interface GetPos {
   (fn: IteratorFunc, index: number, bounds?: any[]): void;
 }
+
+export interface IGene {
+  activate(organism: any): void;
+  work(organism: any): void;
+}
