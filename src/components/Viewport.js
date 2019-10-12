@@ -9,7 +9,7 @@ const Item = ({ pos, genome }) => {
   const style = {
     left: `${x * 8}px`,
     top: `${y * 8}px`,
-    "background-color": genome.meta.color
+    backgroundColor: genome.meta.color
   };
 
   return <div className="item" style={style} />;

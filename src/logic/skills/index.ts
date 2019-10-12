@@ -4,6 +4,7 @@ import { eating } from "./eating";
 import { idling } from "./idling";
 import { moving } from "./moving";
 import { reproducing } from "./reproducing";
+import { behaving } from "./behaving";
 
 export const allSkills = {
   aging,
@@ -11,5 +12,6 @@ export const allSkills = {
   eating,
   idling,
   moving,
-  reproducing
+  reproducing,
+  behaving
 };
