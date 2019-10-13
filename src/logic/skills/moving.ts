@@ -4,6 +4,8 @@ import { getNextPosTo } from "../utils/axis";
 
 export const MAX_ENERGY = 100;
 
+const hasEnergy = (organism: any): boolean => organism.energy > 0;
+
 export const moving: IGene = {
   activate(organism: any) {
     organism.genome.genes.maxEnergy =
@@ -15,7 +17,11 @@ export const moving: IGene = {
     if (!organism.map.onlyEmpty(nextPos)) {
       return;
     }
-    organism.map.move(organism.pos, nextPos);
+    organism.map.move(organism, nextPos);
     organism.energy--;
+    if (hasEnergy(organism)) {
+      return;
+    }
+    organism.map.removeItem(organism);
   }
 };

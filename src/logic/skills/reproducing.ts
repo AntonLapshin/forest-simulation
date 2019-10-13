@@ -9,14 +9,14 @@ export const VISION_RADIUS = 5;
 export const LIBIDO = 0.7;
 
 const enoughEnergy = (organism: any): boolean =>
-  organism.energy > organism.maxEnergy / 2;
+  organism.energy > organism.genome.genes.maxEnergy / 3;
 
 const reduceEnergy = (organism: any) =>
-  (organism.energy -= organism.genome.genes.maxEnergy / 2);
+  (organism.energy -= organism.genome.genes.maxEnergy / 3);
 
-const isPartner = (organism: any) => (item: any): boolean => {
-  return organism.genome.meta.type === item.genome.meta.type;
-};
+const isPartner = (organismA: any) => (organismB: any): boolean =>
+  organismA.genome.meta.type === organismB.genome.meta.type &&
+  organismA !== organismB;
 
 export const reproducing: IGene = {
   activate(organism: any) {
@@ -36,25 +36,25 @@ export const reproducing: IGene = {
 
     if (closestPartner) {
       if (getDistance(organism.pos, closestPartner.pos) === 1) {
-        // console.log("eat");
         if (!enoughEnergy(organism) || !enoughEnergy(closestPartner)) {
           return;
         }
+
         const randomPos = organism.map.getFreePosAroundRandom(organism.pos, 3);
         if (!randomPos) {
           return;
         }
-        organism.map.addItem(
-          new Organism(
-            combineGenomes(organism.genome, closestPartner.genome),
-            randomPos,
-            organism.map
-          )
+
+        const combinedGenome = combineGenomes(
+          organism.genome,
+          closestPartner.genome
         );
+
+        const child = new Organism(combinedGenome, randomPos, organism.map);
+        organism.map.addItem(child);
         reduceEnergy(organism);
         reduceEnergy(closestPartner);
       } else {
-        // console.log("move");
         moving.do(organism, closestPartner.pos);
       }
     } else {

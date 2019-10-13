@@ -7,32 +7,34 @@ export const genomes = {
     skills: ["aging", "duplicating"],
     genes: {
       lifespan: 1000,
-      duplicationChance: 0.02,
+      duplicationChance: 0.01,
       duplicationDistance: 3,
-      calories: 100,
+      calories: 300,
       defense: 0
     },
     meta: {
       type: "plant",
-      color: "lightgreen"
+      color: "lightgreen",
+      generation: 0
     }
   },
   rabbit: {
     skills: ["aging", "eating", "reproducing", "idling", "moving", "behaving"],
     genes: {
-      lifespan: 500,
-      maxEnergy: 100,
+      lifespan: 200,
+      maxEnergy: 200,
       calories: 500,
       defense: 5,
       attack: 5,
       visionRadius: 5,
-      hunger: 0.3,
-      laziness: 0.3,
+      hunger: 0.7,
+      laziness: 0.1,
       libido: 0.5
     },
     meta: {
       type: "rabbit",
-      color: "white"
+      color: "white",
+      generation: 0
     }
   }
 };

@@ -3,6 +3,9 @@ import { posToIndex, getItem, setItem } from "./utils/getset";
 import { iterator, count, getPos } from "./utils/iterator";
 import { getDistance } from "./utils/axis";
 
+const filterPos = ([x, y]: Pos, filter: IteratorFunc) => (pos: Pos) =>
+  filter(pos) && (x !== pos[0] || y !== pos[1]);
+
 export class Map {
   private items = {};
   private iterateCells: Iterator;
@@ -26,11 +29,11 @@ export class Map {
     // this.exists = pos => this.getAt(pos) !== undefined;
   }
 
-  move(pos: Pos, targetPos: Pos): void {
-    const item = this.getAt(pos);
+  move(item: any, targetPos: Pos): void {
+    const oldPos = item.pos;
     item.pos = targetPos;
-    this.setTo(targetPos, this.getAt(pos));
-    this.setTo(pos, null);
+    this.setTo(targetPos, item);
+    this.setTo(oldPos, null);
   }
 
   get freeCellsCount() {
@@ -73,25 +76,25 @@ export class Map {
 
   getFreePosAroundRandom([x, y]: Pos, distance: number): Pos {
     const bounds = [x - distance, y - distance, x + distance, y + distance];
-    const length = this.countItems(this.onlyEmpty, bounds);
+    const length = this.countItems(filterPos([x, y], this.onlyEmpty), bounds);
     const index = ~~(Math.random() * length);
-    return this.getNPos(this.onlyEmpty, index, bounds);
+    return this.getNPos(filterPos([x, y], this.onlyEmpty), index, bounds);
   }
 
-  getClosest([x, y]: Pos, clause: (item: any) => boolean, radius: number): any {
+  getClosest([x, y]: Pos, filter: IteratorFunc, radius: number): any {
     let closestItem = null;
     let minDistance = Number.MAX_VALUE;
     this.iterateCells(
       (pos: Pos) => {
         const item = this.getAt(pos);
-        if (item && clause(item)) {
-          const distance = getDistance([x, y], pos);
-          if (!closestItem || distance < minDistance) {
-            closestItem = item;
-            minDistance = distance;
-          }
+        if (!item || !filter(item)) {
+          return true;
         }
-        return true;
+        const distance = getDistance([x, y], pos);
+        if (!closestItem || distance < minDistance) {
+          closestItem = item;
+          minDistance = distance;
+        }
       },
       [x - radius, y - radius, x + radius, y + radius]
     );

@@ -14,7 +14,7 @@ export const idling: IGene = {
   },
   do(organism: any) {
     organism.energy--;
-    if (!hasEnergy(organism)) {
+    if (hasEnergy(organism)) {
       return;
     }
     organism.map.removeItem(organism);
